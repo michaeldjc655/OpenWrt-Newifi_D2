@@ -28,31 +28,25 @@ env:
 #    - cron: 0 8 */5 * *
 on:
   push:
-    branches: [ master ]
+    branches: [ trunk ]
   pull_request:
-    branches: [ master ]
+    branches: [ trunk ]
   workflow_dispatch:
 
 jobs:
-   test:
+  test:
     strategy:
       matrix:
         include:
           - name: Ubuntu 18.04 (Bionic Beaver)
             os: ubuntu-18.04
-            container: ubuntu：18.04
+            container: Ubuntu:18.04
     name: ${{matrix.name || matrix.os || 'Tests' }}
     runs-on: ${{matrix.os}}
     container: ${{matrix.container}}
-    
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    - name: Initialization environment
-      env:
-        DEBIAN_FRONTEND: noninteractive
-      run: |
+    steps:
+    - uses: actions/checkout@v2
+    - run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804)
