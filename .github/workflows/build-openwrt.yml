@@ -28,9 +28,9 @@ env:
 #    - cron: 0 8 */5 * *
 on:
   push:
-    branches: [ trunk ]
+    branches: [ master ]
   pull_request:
-    branches: [ trunk ]
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
