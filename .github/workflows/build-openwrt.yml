@@ -24,24 +24,22 @@ env:
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
 
-on:
-  repository_dispatch:
-  workflow_dispatch:
-    inputs:
-      ssh:
-        description: 'SSH connection to Actions'
-        required: false
-        default: 'false'
 #  schedule:
 #    - cron: 0 8 */5 * *
+on:
+  push:
+    branches: [ trunk ]
+  pull_request:
+    branches: [ trunk ]
+  workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-18.04
-
+  include:
+    - name: Ubuntu 18.04 (Bionic Beaver)
+      os: ubuntu-18.04
     steps:
     - name: Checkout
-      uses: actions/checkout@main
+      uses: actions/checkout@v2
 
     - name: Initialization environment
       env:
