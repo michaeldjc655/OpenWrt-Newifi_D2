@@ -34,10 +34,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  include:
-    - name: Ubuntu 18.04 (Bionic Beaver)
-      os: ubuntu-18.04
-    steps:
+   test:
+    strategy:
+      matrix:
+        include:
+          - name: Ubuntu 18.04 (Bionic Beaver)
+            os: ubuntu-18.04
+            container: ubuntu：18.04
+    name: ${{matrix.name || matrix.os || 'Tests' }}
+    runs-on: ${{matrix.os}}
+    container: ${{matrix.container}}
+    
+  steps:
     - name: Checkout
       uses: actions/checkout@v2
 
